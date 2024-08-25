@@ -3,7 +3,10 @@ package org.example.hexlet;
 import io.javalin.Javalin;
 import io.javalin.http.NotFoundResponse;
 import io.javalin.rendering.template.JavalinJte;
-import org.example.hexlet.dto.courses.CoursesPage;
+import org.example.hexlet.dto.users.UserPage;
+import org.example.hexlet.dto.users.UsersPage;
+
+import java.util.Objects;
 
 import static io.javalin.rendering.template.TemplateUtil.model;
 
@@ -16,22 +19,21 @@ public class HelloWorld {
         });
 
         app.get("/", ctx -> ctx.render("index.jte"));
-        app.get("/courses", ctx -> {
-            var courses = Data.getCourses();
-            var header = "курсы по программированию";
-            var page = new CoursesPage(courses, header);
-            ctx.render("courses/index.jte", model("page", page));
 
+        app.get("/users", ctx -> {
+            var users = Data.getUsers();
+            var page = new UsersPage(users);
+            ctx.render("users/index.jte", model("page", page));
         });
 
-        app.get("/courses/{id}", ctx -> {
-            var id = ctx.pathParam("id");
-            var course = Data.getCourses().stream()
-                    .filter(c -> c.getId().toString().equals(id))
+        app.get("/users/{id}", ctx -> {
+            var id = ctx.pathParamAsClass("id", Long.class).get();
+            var user = Data.getUsers().stream()
+                    .filter(u -> Objects.equals(u.getId(), id))
                     .findFirst()
                     .orElseThrow(NotFoundResponse::new);
-            var page = new CoursesPage(course);
-            ctx.render("courses/show.jte", model("page", page));
+            var page = new UserPage(user);
+            ctx.render("users/show.jte", model("page", page));
         });
 
         app.get("/hello", ctx -> {

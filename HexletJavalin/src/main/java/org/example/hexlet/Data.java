@@ -1,7 +1,7 @@
 package org.example.hexlet;
 
 import net.datafaker.Faker;
-import org.example.hexlet.model.Course;
+import org.example.hexlet.model.User;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,7 +16,7 @@ public class Data {
     private static final int ITEMS_COUNT = 30;
 //    private static int idCounter = ITEMS_COUNT;
 
-    public static List<Course> getCourses() {
+    public static List<User> getUsers() {
 
         Random random = new Random(123);
         Faker faker = new Faker(new Locale("en"), random);
@@ -28,15 +28,16 @@ public class Data {
 
         Collections.shuffle(ids, random);
 
-        List<Course> courses = new ArrayList<>();
+        List<User> users = new ArrayList<>();
 
         for (int i = 1; i < ITEMS_COUNT; i++) {
-            String name = faker.beer().name();
-            String description = faker.beer().brand();
-            Course course = new Course(name, description);
-            course.setId(Long.valueOf(ids.get(i)));
-            courses.add(course);
+            Long id = ids.get(i);
+            String firstName = faker.name().firstName();
+            String lastName = faker.name().lastName();
+            String email = faker.internet().emailAddress();
+            User user = new User(id, firstName, lastName, email);
+            users.add(user);
         }
-        return courses;
+        return users;
     }
 }
