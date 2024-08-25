@@ -5,8 +5,12 @@ import io.javalin.http.NotFoundResponse;
 import io.javalin.rendering.template.JavalinJte;
 import org.example.hexlet.dto.users.UserPage;
 import org.example.hexlet.dto.users.UsersPage;
+import org.example.hexlet.model.User;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static io.javalin.rendering.template.TemplateUtil.model;
 
@@ -21,8 +25,20 @@ public class HelloWorld {
         app.get("/", ctx -> ctx.render("index.jte"));
 
         app.get("/users", ctx -> {
-            var users = Data.getUsers();
-            var page = new UsersPage(users);
+            var term = ctx.queryParam("term");
+            ArrayList<User> users;
+            if (term != null) {
+                users = Data.getUsers().stream()
+                        .filter(u -> u.getFirstName().toLowerCase().contains(term.toLowerCase().trim())
+                                || u.getLastName().toLowerCase().contains(term.toLowerCase().trim())
+                        )
+                        .collect(Collectors.toCollection(ArrayList::new));
+            } else {
+                users = Data.getUsers().stream()
+                        .sorted(Comparator.comparing(User::getFirstName))
+                        .collect(Collectors.toCollection(ArrayList::new));
+            }
+            var page = new UsersPage(users, term);
             ctx.render("users/index.jte", model("page", page));
         });
 
