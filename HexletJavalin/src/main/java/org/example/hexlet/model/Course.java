@@ -1,26 +1,25 @@
 package org.example.hexlet.model;
 
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-@Getter
 @Setter
+@Getter
 @ToString
 @EqualsAndHashCode
-public final class User {
+public class Course {
     private Long id;
 
     @ToString.Include
     private String name;
-    
-    private String email;
-    private String password;
 
-    public User(String name, String email, String password) {
+    private String description;
+
+    public Course(String name, String description) {
         this.name = name;
-        this.email = email;
-        this.password = password;
+        this.description = description;
     }
 }
