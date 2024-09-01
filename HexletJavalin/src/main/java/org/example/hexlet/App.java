@@ -1,11 +1,13 @@
 package org.example.hexlet;
 
 import io.javalin.Javalin;
-import io.javalin.http.NotFoundResponse;
 import io.javalin.rendering.template.JavalinJte;
+import io.javalin.validation.ValidationException;
 import org.apache.commons.lang3.StringUtils;
+import org.example.hexlet.dto.courses.BuildCoursePage;
 import org.example.hexlet.dto.courses.CoursePage;
 import org.example.hexlet.dto.courses.CoursesPage;
+import org.example.hexlet.dto.users.BuildUserPage;
 import org.example.hexlet.dto.users.UserPage;
 import org.example.hexlet.dto.users.UsersPage;
 import org.example.hexlet.model.Course;
@@ -13,9 +15,8 @@ import org.example.hexlet.model.User;
 import org.example.hexlet.repository.CourseRepository;
 import org.example.hexlet.repository.UserRepository;
 import org.example.hexlet.util.Security;
-
 import java.util.List;
-import java.util.Objects;
+
 
 import static io.javalin.rendering.template.TemplateUtil.model;
 
@@ -28,6 +29,9 @@ public class App {
         });
 
         app.get("/", ctx -> ctx.render("index.jte"));
+
+
+
 
         app.get("/users", ctx -> {
             var term = ctx.queryParam("term");
@@ -43,18 +47,27 @@ public class App {
         });
 
         app.get("/users/build", ctx -> {
-            ctx.render("users/build.jte");
+            var page = new BuildUserPage();
+            ctx.render("users/build.jte", model("page",page));
         });
+
         app.post("/users", ctx -> {
             var name = StringUtils.capitalize(ctx.formParam("name").trim());
             var email = ctx.formParam("email").trim().toLowerCase();
-            var password = ctx.formParam("password");
-            var encryptedPassword = Security.encrypt(password);
-            var passwordConfirmation = ctx.formParam("passwordConfirmation");
 
-            var user = new User(name, email, passwordConfirmation);
-            UserRepository.save(user);
-            ctx.redirect("/users");
+            try{
+                var passwordConfirmation = ctx.formParam("passwordConfirmation");
+                var password = ctx.formParamAsClass("password", String.class)
+                        .check(value -> value.equals(passwordConfirmation), "Пароли не совпадают")
+                        .check(value -> value.length() >= 6, "Пароль менее 6 символов")
+                        .get();
+                var user = new User(name, email, password);
+                UserRepository.save(user);
+                ctx.redirect("users");
+            } catch(ValidationException e) {
+                var page = new BuildUserPage(name, email, e.getErrors());
+                ctx.render("users/build.jte", model("page", page));
+            }
         });
 
         app.get("/users/{id}", ctx -> {
@@ -63,6 +76,9 @@ public class App {
             var page = new UserPage(user);
             ctx.render("users/show.jte", model("page", page));
         });
+
+
+
 
         app.get("/courses", ctx -> {
             var term = ctx.queryParam("term");
@@ -78,15 +94,25 @@ public class App {
         });
 
         app.get("courses/build", ctx -> {
-            ctx.render("courses/build.jte");
+            var page = new BuildCoursePage();
+            ctx.render("courses/build.jte", model("page", page));
         });
-        app.post("/courses", ctx -> {
-            var name = StringUtils.capitalize(ctx.formParam("name").trim());
-            var description = ctx.formParam("description");
 
-            var course = new Course(name, description);
-            CourseRepository.save(course);
-            ctx.redirect("/courses");
+        app.post("/courses", ctx -> {
+            try {
+                var name = ctx.formParamAsClass("name", String.class)
+                        .check(value -> value.length() > 2, "Название курса менее 3 символов")
+                        .get();
+                var description = ctx.formParamAsClass("description", String.class)
+                        .check(value -> value.length() > 10, "Описание курса менее 10 символов")
+                        .get();
+                var course = new Course(name, description);
+                CourseRepository.save(course);
+                ctx.redirect("/courses");
+            } catch(ValidationException e) {
+                var page = new BuildCoursePage(e.getErrors());
+                ctx.render("courses/build.jte", model("page", page));
+            }
         });
 
         app.get("/courses/{id}", ctx -> {

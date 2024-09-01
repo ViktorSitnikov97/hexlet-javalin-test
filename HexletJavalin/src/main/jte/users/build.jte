@@ -1,16 +1,27 @@
+@import org.example.hexlet.dto.users.BuildUserPage
+@param BuildUserPage page
 @template.layout.page(
     content = @`
+        @if(page.getErrors() != null)
+            <ul class="text-danger">
+                @for(var validation : page.getErrors().values())
+                    @for(var error : validation)
+                        <li>${error.getMessage()}</li>
+                    @endfor
+                @endfor
+            </ul>
+        @endif
         <form action="/users" method="post">
             <div class="mb-3">
                 <label class="form-label">
                     Name
-                    <input type="text" class="form-control" required name="name" />
+                    <input type="text" class="form-control" required name="name" value="${page.getName()}"/>
                 </label>
             </div>
             <div class="mb-3">
                 <label class="form-label">
                     Email
-                    <input type="email" class="form-control" required name="email" />
+                    <input type="email" class="form-control" required name="email" value="${page.getEmail()}"/>
                 </label>
             </div>
             <div class="mb-3">
