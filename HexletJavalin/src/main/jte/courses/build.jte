@@ -1,19 +1,19 @@
 @template.layout.page(
     content = @`
         <form action="/courses" method="post">
-            <div>
-                <label>
-                    Имя
-                    <input type="text" name="name" />
+            <div class="mb-3">
+                <label class="form-label">
+                    Name
+                    <input type="text" class="form-control" required name="name" />
                 </label>
             </div>
-            <div>
-                <label>
+            <div class="mb-3">
+                <label class="form-label">
                     Description
-                    <input type="text" required name="description" />
+                    <input type="text" class="form-control" required name="description" />
                 </label>
             </div>
-            <input type="submit" value="Add" />
+            <input type="submit" class="btn btn-primary" value="Add" />
         </form>
     `
 )

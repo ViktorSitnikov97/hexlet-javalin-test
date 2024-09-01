@@ -5,7 +5,7 @@ public final class JtebuildGenerated {
 	public static void render(gg.jte.html.HtmlTemplateOutput jteOutput, gg.jte.html.HtmlInterceptor jteHtmlInterceptor) {
 		gg.jte.generated.ondemand.layout.JtepageGenerated.render(jteOutput, jteHtmlInterceptor, new gg.jte.html.HtmlContent() {
 			public void writeTo(gg.jte.html.HtmlTemplateOutput jteOutput) {
-				jteOutput.writeContent("\n        <form action=\"/courses\" method=\"post\">\n            <div>\n                <label>\n                    Имя\n                    <input type=\"text\" name=\"name\" />\n                </label>\n            </div>\n            <div>\n                <label>\n                    Description\n                    <input type=\"text\" required name=\"description\" />\n                </label>\n            </div>\n            <input type=\"submit\" value=\"Add\" />\n        </form>\n    ");
+				jteOutput.writeContent("\n        <form action=\"/courses\" method=\"post\">\n            <div class=\"mb-3\">\n                <label class=\"form-label\">\n                    Name\n                    <input type=\"text\" class=\"form-control\" required name=\"name\" />\n                </label>\n            </div>\n            <div class=\"mb-3\">\n                <label class=\"form-label\">\n                    Description\n                    <input type=\"text\" class=\"form-control\" required name=\"description\" />\n                </label>\n            </div>\n            <input type=\"submit\" class=\"btn btn-primary\" value=\"Add\" />\n        </form>\n    ");
 			}
 		}, null);
 	}

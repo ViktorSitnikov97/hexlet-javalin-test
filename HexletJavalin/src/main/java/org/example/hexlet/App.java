@@ -3,6 +3,7 @@ package org.example.hexlet;
 import io.javalin.Javalin;
 import io.javalin.http.NotFoundResponse;
 import io.javalin.rendering.template.JavalinJte;
+import org.apache.commons.lang3.StringUtils;
 import org.example.hexlet.dto.courses.CoursePage;
 import org.example.hexlet.dto.courses.CoursesPage;
 import org.example.hexlet.dto.users.UserPage;
@@ -11,6 +12,8 @@ import org.example.hexlet.model.Course;
 import org.example.hexlet.model.User;
 import org.example.hexlet.repository.CourseRepository;
 import org.example.hexlet.repository.UserRepository;
+import org.example.hexlet.util.Security;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -39,16 +42,17 @@ public class App {
             ctx.render("users/index.jte", model("page", page));
         });
 
-        app.get("users/build", ctx -> {
+        app.get("/users/build", ctx -> {
             ctx.render("users/build.jte");
         });
         app.post("/users", ctx -> {
-            var name = ctx.formParam("name").trim();
+            var name = StringUtils.capitalize(ctx.formParam("name").trim());
             var email = ctx.formParam("email").trim().toLowerCase();
             var password = ctx.formParam("password");
+            var encryptedPassword = Security.encrypt(password);
             var passwordConfirmation = ctx.formParam("passwordConfirmation");
 
-            var user = new User(name, email, password);
+            var user = new User(name, email, passwordConfirmation);
             UserRepository.save(user);
             ctx.redirect("/users");
         });
@@ -77,7 +81,7 @@ public class App {
             ctx.render("courses/build.jte");
         });
         app.post("/courses", ctx -> {
-            var name = ctx.formParam("name").trim();
+            var name = StringUtils.capitalize(ctx.formParam("name").trim());
             var description = ctx.formParam("description");
 
             var course = new Course(name, description);

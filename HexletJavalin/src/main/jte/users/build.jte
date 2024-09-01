@@ -1,31 +1,31 @@
 @template.layout.page(
     content = @`
         <form action="/users" method="post">
-            <div>
-                <label>
-                    Имя
-                    <input type="text" name="name" />
+            <div class="mb-3">
+                <label class="form-label">
+                    Name
+                    <input type="text" class="form-control" required name="name" />
                 </label>
             </div>
-            <div>
-                <label>
+            <div class="mb-3">
+                <label class="form-label">
                     Email
-                    <input type="email" required name="email" />
+                    <input type="email" class="form-control" required name="email" />
                 </label>
             </div>
-            <div>
-                <label>
-                    Пароль
-                    <input type="password" required name="password" />
+            <div class="mb-3">
+                <label class="form-label">
+                    Password
+                    <input type="password" class="form-control" required name="password" />
                 </label>
             </div>
-            <div>
-                <label>
-                    Подтверждение пароля
-                    <input type="password" required name="passwordConfirmation" />
+            <div class="mb-3">
+                <label class="form-label">
+                    Password Confirmation
+                    <input type="password" class="form-control" required name="passwordConfirmation" />
                 </label>
             </div>
-            <input type="submit" value="Зарегистрировать" />
+            <input type="submit" class="btn btn-primary" value="Sign Up" />
         </form>
     `
 )
