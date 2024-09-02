@@ -2,7 +2,7 @@ package gg.jte.generated.ondemand.courses;
 import org.example.hexlet.dto.courses.BuildCoursePage;
 public final class JtebuildGenerated {
 	public static final String JTE_NAME = "courses/build.jte";
-	public static final int[] JTE_LINE_INFO = {0,0,1,1,1,2,4,4,5,5,7,7,8,8,9,9,9,10,10,11,11,13,13,29,29,29,29,29,1,1,1,1};
+	public static final int[] JTE_LINE_INFO = {0,0,1,1,1,2,4,4,5,5,7,7,8,8,9,9,9,10,10,11,11,13,13,18,18,18,18,18,18,18,18,18,24,24,24,29,29,29,29,29,1,1,1,1};
 	public static void render(gg.jte.html.HtmlTemplateOutput jteOutput, gg.jte.html.HtmlInterceptor jteHtmlInterceptor, BuildCoursePage page) {
 		gg.jte.generated.ondemand.layout.JtepageGenerated.render(jteOutput, jteHtmlInterceptor, new gg.jte.html.HtmlContent() {
 			public void writeTo(gg.jte.html.HtmlTemplateOutput jteOutput) {
@@ -21,7 +21,19 @@ public final class JtebuildGenerated {
 					}
 					jteOutput.writeContent("\n            </ul>\n        ");
 				}
-				jteOutput.writeContent("\n        <form action=\"/courses\" method=\"post\">\n            <div class=\"mb-3\">\n                <label class=\"form-label\">\n                    Name\n                    <input type=\"text\" class=\"form-control\" required name=\"name\"/>\n                </label>\n            </div>\n            <div class=\"mb-3\">\n                <label class=\"form-label\">\n                    Description\n                    <input type=\"text\" class=\"form-control\" required name=\"description\"/>\n                </label>\n            </div>\n            <input type=\"submit\" class=\"btn btn-primary\" value=\"Add\" />\n        </form>\n    ");
+				jteOutput.writeContent("\n        <form action=\"/courses\" method=\"post\" class=\"text-center p-5\">\n            <div class=\"mb-3\">\n                <label class=\"form-label\">\n                    Name\n                    <input type=\"text\" class=\"form-control\" required name=\"name\"");
+				var __jte_html_attribute_0 = page.getName();
+				if (gg.jte.runtime.TemplateUtils.isAttributeRendered(__jte_html_attribute_0)) {
+					jteOutput.writeContent(" value=\"");
+					jteOutput.setContext("input", "value");
+					jteOutput.writeUserContent(__jte_html_attribute_0);
+					jteOutput.setContext("input", null);
+					jteOutput.writeContent("\"");
+				}
+				jteOutput.writeContent("/>\n                </label>\n            </div>\n            <div class=\"mb-3\">\n                <label class=\"form-label\">\n                    <label class=\"form-label\">Description</label>\n                    <textarea class=\"form-control\" rows=\"20\" cols=\"70\" type=\"text\" name=\"description\">");
+				jteOutput.setContext("textarea", null);
+				jteOutput.writeUserContent(page.getDescription());
+				jteOutput.writeContent("</textarea>\n                </label>\n            </div>\n            <input type=\"submit\" class=\"btn btn-primary\" value=\"Add\" />\n        </form>\n    ");
 			}
 		}, null);
 	}

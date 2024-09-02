@@ -110,7 +110,9 @@ public class App {
                 CourseRepository.save(course);
                 ctx.redirect("/courses");
             } catch(ValidationException e) {
-                var page = new BuildCoursePage(e.getErrors());
+                var name = ctx.formParam("name");
+                var description = ctx.formParam("description");
+                var page = new BuildCoursePage(name, description, e.getErrors());
                 ctx.render("courses/build.jte", model("page", page));
             }
         });

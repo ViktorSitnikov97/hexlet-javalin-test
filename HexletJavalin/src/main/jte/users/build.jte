@@ -11,7 +11,7 @@
                 @endfor
             </ul>
         @endif
-        <form action="/users" method="post">
+        <form action="/users" method="post" class="text-center p-5">
             <div class="mb-3">
                 <label class="form-label">
                     Name

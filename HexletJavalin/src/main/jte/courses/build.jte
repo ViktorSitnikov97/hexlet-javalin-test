@@ -11,17 +11,17 @@
             @endfor
             </ul>
         @endif
-        <form action="/courses" method="post">
+        <form action="/courses" method="post" class="text-center p-5">
             <div class="mb-3">
                 <label class="form-label">
                     Name
-                    <input type="text" class="form-control" required name="name"/>
+                    <input type="text" class="form-control" required name="name" value="${page.getName()}"/>
                 </label>
             </div>
             <div class="mb-3">
                 <label class="form-label">
-                    Description
-                    <input type="text" class="form-control" required name="description"/>
+                    <label class="form-label">Description</label>
+                    <textarea class="form-control" rows="20" cols="70" type="text" name="description">${page.getDescription()}</textarea>
                 </label>
             </div>
             <input type="submit" class="btn btn-primary" value="Add" />
