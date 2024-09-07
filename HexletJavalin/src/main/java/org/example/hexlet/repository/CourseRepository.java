@@ -1,6 +1,7 @@
 package org.example.hexlet.repository;
 
 import org.example.hexlet.model.Course;
+import org.example.hexlet.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,18 @@ public class CourseRepository {
     public static void save(Course course) {
         course.setId((long) entities.size() + 1);
         entities.add(course);
+    }
+
+    public static void delete(Long id) {
+        List<Course> entitiesInterim = new ArrayList<>();
+        entities.forEach(course -> {
+            if(!course.getId().equals(id)) {
+                course.setId((long) entitiesInterim.size() + 1);
+                entitiesInterim.add(course);
+            }
+        });
+        entities.clear();
+        entities.addAll(entitiesInterim);
     }
 
     public static List<Course> search(String term) {

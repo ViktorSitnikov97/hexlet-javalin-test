@@ -4,6 +4,8 @@ import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinJte;
 import io.javalin.validation.ValidationException;
 import org.apache.commons.lang3.StringUtils;
+import org.example.hexlet.controllers.CoursesController;
+import org.example.hexlet.controllers.UsersController;
 import org.example.hexlet.dto.courses.BuildCoursePage;
 import org.example.hexlet.dto.courses.CoursePage;
 import org.example.hexlet.dto.courses.CoursesPage;
@@ -15,7 +17,6 @@ import org.example.hexlet.model.User;
 import org.example.hexlet.repository.CourseRepository;
 import org.example.hexlet.repository.UserRepository;
 import org.example.hexlet.util.NamedRoutes;
-import org.example.hexlet.util.Security;
 import java.util.List;
 
 
@@ -32,99 +33,22 @@ public class App {
         app.get("/", ctx -> ctx.render("index.jte"));
 
 
+        app.get(NamedRoutes.usersPath(), UsersController::index);
+        app.get(NamedRoutes.buildUserPath(), UsersController::build);
+        app.post(NamedRoutes.usersPath(), UsersController::create);
+        app.get(NamedRoutes.userPath("{id}"), UsersController::show);
+        app.get(NamedRoutes.userEditPath("{id}"), UsersController::edit);
+        app.patch(NamedRoutes.userPath("{id}"), UsersController::update);
+        app.delete(NamedRoutes.userPath("{id}"), UsersController::destroy);
 
 
-        app.get(NamedRoutes.usersPath(), ctx -> {
-            var term = ctx.queryParam("term");
-            List<User> users;
-            if (term != null) {
-                users = UserRepository.search(term);
-            } else {
-                users = UserRepository.getEntities();
-            }
-
-            var page = new UsersPage(users, term);
-            ctx.render("users/index.jte", model("page", page));
-        });
-
-        app.get(NamedRoutes.buildUserPath(), ctx -> {
-            var page = new BuildUserPage();
-            ctx.render("users/build.jte", model("page",page));
-        });
-
-        app.post(NamedRoutes.usersPath(), ctx -> {
-            var name = StringUtils.capitalize(ctx.formParam("name").trim());
-            var email = ctx.formParam("email").trim().toLowerCase();
-
-            try{
-                var passwordConfirmation = ctx.formParam("passwordConfirmation");
-                var password = ctx.formParamAsClass("password", String.class)
-                        .check(value -> value.equals(passwordConfirmation), "Пароли не совпадают")
-                        .check(value -> value.length() >= 6, "Пароль менее 6 символов")
-                        .get();
-                var user = new User(name, email, password);
-                UserRepository.save(user);
-                ctx.redirect(NamedRoutes.usersPath());
-            } catch(ValidationException e) {
-                var page = new BuildUserPage(name, email, e.getErrors());
-                ctx.render("users/build.jte", model("page", page));
-            }
-        });
-
-        app.get(NamedRoutes.userPath("{id}"), ctx -> {
-            var id = ctx.pathParamAsClass("id", Long.class).get();
-            var user = UserRepository.find(id).get();
-            var page = new UserPage(user);
-            ctx.render("users/show.jte", model("page", page));
-        });
-
-
-
-
-        app.get(NamedRoutes.coursesPath(), ctx -> {
-            var term = ctx.queryParam("term");
-            List<Course> courses;
-            if (term != null) {
-                courses = CourseRepository.search(term);
-            } else {
-                courses = CourseRepository.getEntities();
-            }
-
-            var page = new CoursesPage(courses, term);
-            ctx.render("courses/index.jte", model("page", page));
-        });
-
-        app.get(NamedRoutes.buildCoursePath(), ctx -> {
-            var page = new BuildCoursePage();
-            ctx.render("courses/build.jte", model("page", page));
-        });
-
-        app.post(NamedRoutes.coursesPath(), ctx -> {
-            try {
-                var name = ctx.formParamAsClass("name", String.class)
-                        .check(value -> value.length() > 2, "Название курса менее 3 символов")
-                        .get();
-                var description = ctx.formParamAsClass("description", String.class)
-                        .check(value -> value.length() > 10, "Описание курса менее 10 символов")
-                        .get();
-                var course = new Course(name, description);
-                CourseRepository.save(course);
-                ctx.redirect("/courses");
-            } catch(ValidationException e) {
-                var name = ctx.formParam("name");
-                var description = ctx.formParam("description");
-                var page = new BuildCoursePage(name, description, e.getErrors());
-                ctx.render("courses/build.jte", model("page", page));
-            }
-        });
-
-        app.get(NamedRoutes.coursePath("{id}"), ctx -> {
-            var id = ctx.pathParamAsClass("id", Long.class).get();
-            var course = CourseRepository.find(id).get();
-            var page = new CoursePage(course);
-            ctx.render("courses/show.jte", model("page", page));
-        });
-
+        app.get(NamedRoutes.coursesPath(), CoursesController::index);
+        app.get(NamedRoutes.buildCoursePath(), CoursesController::build);
+        app.post(NamedRoutes.coursesPath(), CoursesController::create);
+        app.get(NamedRoutes.coursePath("{id}"), CoursesController::show);
+        app.get(NamedRoutes.courseEditPath("{id}"), CoursesController::edit);
+        app.patch(NamedRoutes.coursePath("{id}"), CoursesController::update);
+        app.delete(NamedRoutes.coursePath("{id}"), CoursesController::destroy);
 
 
         app.get("/hello", ctx -> {

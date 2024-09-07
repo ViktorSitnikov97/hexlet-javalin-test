@@ -18,7 +18,15 @@ public final class UserRepository {
     }
 
     public static void delete(Long id) {
-        entities.remove(id.intValue());
+        List<User> entitiesInterim = new ArrayList<>();
+        entities.forEach(user -> {
+            if(!user.getId().equals(id)) {
+                user.setId((long) entitiesInterim.size() + 1);
+                entitiesInterim.add(user);
+            }
+        });
+        entities.clear();
+        entities.addAll(entitiesInterim);
     }
 
     public static List<User> search(String term) {
