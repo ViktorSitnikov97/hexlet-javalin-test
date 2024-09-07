@@ -1,8 +1,9 @@
 package gg.jte.generated.ondemand.users;
 import org.example.hexlet.dto.users.UsersPage;
+import org.example.hexlet.util.NamedRoutes;
 public final class JteindexGenerated {
 	public static final String JTE_NAME = "users/index.jte";
-	public static final int[] JTE_LINE_INFO = {0,0,1,1,1,2,5,5,10,10,10,10,10,10,10,10,10,15,15,17,17,18,18,21,21,21,21,21,21,21,24,24,27,27,27,27,29,29,29,29,29,1,1,1,1};
+	public static final int[] JTE_LINE_INFO = {0,0,1,2,2,2,3,6,6,11,11,11,11,11,11,11,11,11,16,16,18,18,19,19,22,22,22,22,22,22,22,22,22,22,22,22,25,25,28,28,28,28,30,30,30,30,30,2,2,2,2};
 	public static void render(gg.jte.html.HtmlTemplateOutput jteOutput, gg.jte.html.HtmlInterceptor jteHtmlInterceptor, UsersPage page) {
 		gg.jte.generated.ondemand.layout.JtepageGenerated.render(jteOutput, jteHtmlInterceptor, new gg.jte.html.HtmlContent() {
 			public void writeTo(gg.jte.html.HtmlTemplateOutput jteOutput) {
@@ -21,11 +22,16 @@ public final class JteindexGenerated {
 				}
 				jteOutput.writeContent("\n        ");
 				for (var user : page.getUsers()) {
-					jteOutput.writeContent("\n            <tr>\n                <td>\n                    <p><a href = \"users/");
-					jteOutput.setContext("a", "href");
-					jteOutput.writeUserContent(user.getId());
-					jteOutput.setContext("a", null);
-					jteOutput.writeContent("\">");
+					jteOutput.writeContent("\n            <tr>\n                <td>\n                    <p><a");
+					var __jte_html_attribute_1 = NamedRoutes.userPath(user.getId());
+					if (gg.jte.runtime.TemplateUtils.isAttributeRendered(__jte_html_attribute_1)) {
+						jteOutput.writeContent(" href=\"");
+						jteOutput.setContext("a", "href");
+						jteOutput.writeUserContent(__jte_html_attribute_1);
+						jteOutput.setContext("a", null);
+						jteOutput.writeContent("\"");
+					}
+					jteOutput.writeContent(">");
 					jteOutput.setContext("a", null);
 					jteOutput.writeUserContent(user.getName());
 					jteOutput.writeContent("</a></p>\n                </td>\n            </tr>\n        ");

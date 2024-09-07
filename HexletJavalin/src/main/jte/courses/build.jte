@@ -1,4 +1,5 @@
 @import org.example.hexlet.dto.courses.BuildCoursePage
+@import org.example.hexlet.util.NamedRoutes
 @param BuildCoursePage page
 @template.layout.page(
     content = @`
@@ -11,7 +12,7 @@
             @endfor
             </ul>
         @endif
-        <form action="/courses" method="post" class="text-center p-5">
+        <form action="${NamedRoutes.coursesPath()}" method="post" class="text-center p-5">
             <div class="mb-3">
                 <label class="form-label">
                     Name

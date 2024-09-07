@@ -1,4 +1,5 @@
 @import org.example.hexlet.dto.users.BuildUserPage
+@import org.example.hexlet.util.NamedRoutes
 @param BuildUserPage page
 @template.layout.page(
     content = @`
@@ -11,7 +12,7 @@
                 @endfor
             </ul>
         @endif
-        <form action="/users" method="post" class="text-center p-5">
+        <form action="${NamedRoutes.usersPath()}" method="post" class="text-center p-5">
             <div class="mb-3">
                 <label class="form-label">
                     Name
