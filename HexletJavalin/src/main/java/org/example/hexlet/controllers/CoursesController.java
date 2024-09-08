@@ -6,6 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.example.hexlet.dto.courses.BuildCoursePage;
 import org.example.hexlet.dto.courses.CoursePage;
 import org.example.hexlet.dto.courses.CoursesPage;
+import org.example.hexlet.dto.courses.EditCoursePage;
 import org.example.hexlet.dto.users.BuildUserPage;
 import org.example.hexlet.dto.users.UserPage;
 import org.example.hexlet.dto.users.UsersPage;
@@ -67,7 +68,9 @@ public class CoursesController {
     public static void edit(Context ctx) throws Exception {
         var id = ctx.pathParamAsClass("id", Long.class).get();
         var course = CourseRepository.find(id).get();
-        var page = new CoursePage(course);
+        var name = course.getName();
+        var description = course.getDescription();
+        var page = new EditCoursePage(id, name, description, null);
         ctx.render("courses/edit.jte", model("page", page));
     }
 
@@ -92,7 +95,7 @@ public class CoursesController {
             ctx.redirect(NamedRoutes.coursesPath());
 
         } catch(ValidationException e) {
-            var page = new BuildCoursePage(name, description, e.getErrors());
+            var page = new EditCoursePage(id, name, description, e.getErrors());
             ctx.render("courses/edit.jte", model("page", page));
         }
     }

@@ -3,6 +3,7 @@ package org.example.hexlet.controllers;
 import io.javalin.validation.ValidationException;
 import org.apache.commons.lang3.StringUtils;
 import org.example.hexlet.dto.users.BuildUserPage;
+import org.example.hexlet.dto.users.EditUserPage;
 import org.example.hexlet.dto.users.UserPage;
 import org.example.hexlet.dto.users.UsersPage;
 import org.example.hexlet.model.User;
@@ -64,13 +65,16 @@ public class UsersController {
     public static void edit(Context ctx) throws Exception {
         var id = ctx.pathParamAsClass("id", Long.class).get();
         var user = UserRepository.find(id).get();
-        var page = new UserPage(user);
+        var name = user.getName();
+        var email = user.getEmail();
+        var password = user.getPassword();
+        var page = new EditUserPage(id, name, email, password, null);
         ctx.render("users/edit.jte", model("page", page));
     }
 
     public static void update(Context ctx) throws Exception {
-        var id = ctx.pathParamAsClass("id", Long.class).get();
 
+        var id = ctx.pathParamAsClass("id", Long.class).get();
         var name = StringUtils.capitalize(ctx.formParam("name").trim());
         var email = ctx.formParam("email").trim().toLowerCase();
 
@@ -89,7 +93,8 @@ public class UsersController {
             ctx.redirect(NamedRoutes.usersPath());
 
         } catch(ValidationException e) {
-            var page = new BuildUserPage(name, email, e.getErrors());
+//            var password = ctx.formParam("password");
+            var page = new EditUserPage(id, name, email, null, e.getErrors());
             ctx.render("users/edit.jte", model("page", page));
         }
     }

@@ -5,6 +5,7 @@ import io.javalin.rendering.template.JavalinJte;
 import io.javalin.validation.ValidationException;
 import org.apache.commons.lang3.StringUtils;
 import org.example.hexlet.controllers.CoursesController;
+import org.example.hexlet.controllers.RootController;
 import org.example.hexlet.controllers.UsersController;
 import org.example.hexlet.dto.courses.BuildCoursePage;
 import org.example.hexlet.dto.courses.CoursePage;
@@ -30,24 +31,29 @@ public class App {
             config.fileRenderer(new JavalinJte());
         });
 
-        app.get("/", ctx -> ctx.render("index.jte"));
-
+        app.get(NamedRoutes.rootPath(), RootController::indexRoot);
 
         app.get(NamedRoutes.usersPath(), UsersController::index);
+
         app.get(NamedRoutes.buildUserPath(), UsersController::build);
         app.post(NamedRoutes.usersPath(), UsersController::create);
+
         app.get(NamedRoutes.userPath("{id}"), UsersController::show);
         app.get(NamedRoutes.userEditPath("{id}"), UsersController::edit);
-        app.patch(NamedRoutes.userPath("{id}"), UsersController::update);
+        app.post(NamedRoutes.userPath("{id}"), UsersController::update);
+
         app.delete(NamedRoutes.userPath("{id}"), UsersController::destroy);
 
 
         app.get(NamedRoutes.coursesPath(), CoursesController::index);
+
         app.get(NamedRoutes.buildCoursePath(), CoursesController::build);
         app.post(NamedRoutes.coursesPath(), CoursesController::create);
+
         app.get(NamedRoutes.coursePath("{id}"), CoursesController::show);
         app.get(NamedRoutes.courseEditPath("{id}"), CoursesController::edit);
-        app.patch(NamedRoutes.coursePath("{id}"), CoursesController::update);
+        app.post(NamedRoutes.coursePath("{id}"), CoursesController::update);
+
         app.delete(NamedRoutes.coursePath("{id}"), CoursesController::destroy);
 
 
