@@ -24,6 +24,12 @@ public class NamedRoutes {
     public static String userEditPath(Long id) {
         return userEditPath(String.valueOf(id));
     }
+    public static String userDeletePath(String id) {
+        return "/users/" + id + "/delete";
+    }
+    public static String userDeletePath(Long id) {
+        return userDeletePath(String.valueOf(id));
+    }
 
 
 

@@ -42,7 +42,7 @@ public class App {
         app.get(NamedRoutes.userEditPath("{id}"), UsersController::edit);
         app.post(NamedRoutes.userPath("{id}"), UsersController::update);
 
-        app.delete(NamedRoutes.userPath("{id}"), UsersController::destroy);
+        app.get(NamedRoutes.userDeletePath("{id}"), UsersController::destroy);
 
 
         app.get(NamedRoutes.coursesPath(), CoursesController::index);

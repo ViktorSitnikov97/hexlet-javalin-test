@@ -11,9 +11,14 @@
         <div class="mx-auto p-4 py-md-1">
             <p>Email: ${page.getUser().getEmail()}</p>
         </div>
-        <div class="mx-auto p-4 py-md-3">
-            <a class="btn btn-primary btn-sm" href="${NamedRoutes.userEditPath(page.getUser().getId())}" role="button">Update</a>
-        </div>
+        <table>
+            <tr>
+                <div class="mx-auto p-4 py-md-3">
+                <th><a class="btn btn-primary btn-sm offset-md-4" href="${NamedRoutes.userEditPath(page.getUser().getId())}" role="button">Update</a></th>
+                <th><a class="btn btn-danger btn-sm offset-md-4" href="${NamedRoutes.userDeletePath(page.getUser().getId())}" role="button">Delete</a></th>
+                </div>
+            </tr>
+        </table>
         `,
 
     footer = @`
