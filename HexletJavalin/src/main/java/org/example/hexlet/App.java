@@ -2,26 +2,11 @@ package org.example.hexlet;
 
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinJte;
-import io.javalin.validation.ValidationException;
-import org.apache.commons.lang3.StringUtils;
 import org.example.hexlet.controllers.CoursesController;
 import org.example.hexlet.controllers.RootController;
 import org.example.hexlet.controllers.UsersController;
-import org.example.hexlet.dto.courses.BuildCoursePage;
-import org.example.hexlet.dto.courses.CoursePage;
-import org.example.hexlet.dto.courses.CoursesPage;
-import org.example.hexlet.dto.users.BuildUserPage;
-import org.example.hexlet.dto.users.UserPage;
-import org.example.hexlet.dto.users.UsersPage;
-import org.example.hexlet.model.Course;
-import org.example.hexlet.model.User;
-import org.example.hexlet.repository.CourseRepository;
-import org.example.hexlet.repository.UserRepository;
 import org.example.hexlet.util.NamedRoutes;
-import java.util.List;
 
-
-import static io.javalin.rendering.template.TemplateUtil.model;
 
 
 public class App {
