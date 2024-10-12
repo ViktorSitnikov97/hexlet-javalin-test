@@ -1,9 +1,10 @@
 package gg.jte.generated.ondemand;
 import org.example.hexlet.util.NamedRoutes;
+import org.example.hexlet.dto.MainPage;
 public final class JteindexGenerated {
 	public static final String JTE_NAME = "index.jte";
-	public static final int[] JTE_LINE_INFO = {0,0,1,1,1,1,4,4,10,10,10,10,10,10,10,10,10,11,11,11,11,11,11,11,11,11,12,12,12,12,12,12,12,12,12,13,13,13,13,13,13,13,13,13,16,16,16,16,18,18,18,18,18,18,18,18};
-	public static void render(gg.jte.html.HtmlTemplateOutput jteOutput, gg.jte.html.HtmlInterceptor jteHtmlInterceptor) {
+	public static final int[] JTE_LINE_INFO = {0,0,1,2,2,2,3,6,6,12,12,12,12,12,12,12,12,12,13,13,13,13,13,13,13,13,13,14,14,14,14,14,14,14,14,14,15,15,15,15,15,15,15,15,15,18,18,18,18,19,19,21,21,24,24,24,24,24,2,2,2,2};
+	public static void render(gg.jte.html.HtmlTemplateOutput jteOutput, gg.jte.html.HtmlInterceptor jteHtmlInterceptor, MainPage page) {
 		gg.jte.generated.ondemand.layout.JtepageGenerated.render(jteOutput, jteHtmlInterceptor, new gg.jte.html.HtmlContent() {
 			public void writeTo(gg.jte.html.HtmlTemplateOutput jteOutput) {
 				jteOutput.writeContent("\n    <h2 class=\"text-center p-5\" style=\"background-color: rgba(103, 252, 202, 10.05);\">\n        <p>Welcome to my mini-site</p>\n    </h2>\n    <div class=\"text-left p-5\">\n        <ul>\n            <li><a");
@@ -46,11 +47,16 @@ public final class JteindexGenerated {
 			}
 		}, new gg.jte.html.HtmlContent() {
 			public void writeTo(gg.jte.html.HtmlTemplateOutput jteOutput) {
-				jteOutput.writeContent("\n        <p>Just do it</p>\n    ");
+				jteOutput.writeContent("\n        ");
+				if (!page.isVisited()) {
+					jteOutput.writeContent("\n            <p>Это сообщение показывается только один раз. Если вы хотите увидеть его снова, сотрите куки</p>\n        ");
+				}
+				jteOutput.writeContent("\n        <p>Just do it</p>\n\n    ");
 			}
 		});
 	}
 	public static void renderMap(gg.jte.html.HtmlTemplateOutput jteOutput, gg.jte.html.HtmlInterceptor jteHtmlInterceptor, java.util.Map<String, Object> params) {
-		render(jteOutput, jteHtmlInterceptor);
+		MainPage page = (MainPage)params.get("page");
+		render(jteOutput, jteHtmlInterceptor, page);
 	}
 }
