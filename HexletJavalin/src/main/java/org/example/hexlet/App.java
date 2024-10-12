@@ -4,6 +4,7 @@ import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinJte;
 import org.example.hexlet.controllers.CoursesController;
 import org.example.hexlet.controllers.RootController;
+import org.example.hexlet.controllers.SessionController;
 import org.example.hexlet.controllers.UsersController;
 import org.example.hexlet.util.NamedRoutes;
 
@@ -17,6 +18,10 @@ public class App {
         });
 
         app.get(NamedRoutes.rootPath(), RootController::indexRoot);
+
+        app.get(NamedRoutes.buildSessionsPath(), SessionController::build);
+        app.post(NamedRoutes.sessionsPath(), SessionController::create);
+        app.get(NamedRoutes.deleteSessionsPath(), SessionController::destroy);
 
         app.get(NamedRoutes.usersPath(), UsersController::index);
 
