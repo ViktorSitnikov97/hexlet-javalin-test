@@ -57,7 +57,7 @@ public class CoursesController {
             var course = new Course(name, description);
             CourseRepository.save(course);
             ctx.redirect("/courses");
-        } catch(ValidationException e) {
+        } catch (ValidationException e) {
             var name = ctx.formParam("name");
             var description = ctx.formParam("description");
             var page = new BuildCoursePage(name, description, e.getErrors());
@@ -94,7 +94,7 @@ public class CoursesController {
 
             ctx.redirect(NamedRoutes.coursesPath());
 
-        } catch(ValidationException e) {
+        } catch (ValidationException e) {
             var page = new EditCoursePage(id, name, description, e.getErrors());
             ctx.render("courses/edit.jte", model("page", page));
         }

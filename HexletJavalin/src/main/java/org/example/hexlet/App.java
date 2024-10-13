@@ -19,9 +19,9 @@ public class App {
 
         app.get(NamedRoutes.rootPath(), RootController::indexRoot);
 
-        app.get(NamedRoutes.buildSessionsPath(), SessionController::build);
-        app.post(NamedRoutes.sessionsPath(), SessionController::create);
-        app.get(NamedRoutes.deleteSessionsPath(), SessionController::destroy);
+        app.get(NamedRoutes.buildSessionPath(), SessionController::build);
+        app.post(NamedRoutes.loginPath(), SessionController::create);
+        app.post(NamedRoutes.logoutPath(), SessionController::destroy);
 
         app.get(NamedRoutes.usersPath(), UsersController::index);
 
@@ -32,7 +32,7 @@ public class App {
         app.get(NamedRoutes.userEditPath("{id}"), UsersController::edit);
         app.post(NamedRoutes.userPath("{id}"), UsersController::update);
 
-        app.get(NamedRoutes.userDeletePath("{id}"), UsersController::destroy);
+        app.post(NamedRoutes.userDeletePath("{id}"), UsersController::destroy);
 
 
         app.get(NamedRoutes.coursesPath(), CoursesController::index);
@@ -56,6 +56,6 @@ public class App {
             }
 
         });
-        app.start(7070);
+        app.start(7060);
     }
 }

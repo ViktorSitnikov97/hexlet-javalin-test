@@ -25,7 +25,7 @@ public class SessionController {
                     .get();
             ctx.sessionAttribute("currentUser", nickname);
             ctx.redirect(NamedRoutes.rootPath());
-        } catch(ValidationException e) {
+        } catch (ValidationException e) {
             var visited = Boolean.valueOf(ctx.cookie("visited4"));
             var page = new MainPage(visited, null, e.getErrors());
             ctx.render("sessions/build.jte", model("page", page));

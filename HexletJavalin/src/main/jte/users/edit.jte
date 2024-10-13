@@ -2,6 +2,7 @@
 @import org.example.hexlet.util.NamedRoutes
 @param EditUserPage page
 @template.layout.page(
+page = page,
 content = @`
     @if(page.getErrors() != null)
         <ul class="text-danger">

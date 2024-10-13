@@ -52,15 +52,13 @@ public class NamedRoutes {
         return courseEditPath(String.valueOf(id));
     }
 
-    public static String buildSessionsPath() {
+    public static String buildSessionPath() {
         return "/sessions/build";
     }
-
-    public static String sessionsPath() {
+    public static String loginPath() {
         return "/sessions";
     }
-
-    public static String deleteSessionsPath() {
+    public static String logoutPath() {
         return "sessions/delete";
     }
 

@@ -2,7 +2,8 @@
 @import org.example.hexlet.util.NamedRoutes
 @param UsersPage page
 @template.layout.page(
-    content = @`
+page = page,
+content = @`
     <h1 class="text-center p-5">Пользователи</h1>
     <form class="input-group" action="/users">
         <input type="search" class="form-control rounded" placeholder="Search"

@@ -2,10 +2,7 @@ package org.example.hexlet.controllers;
 
 import io.javalin.http.Context;
 import org.example.hexlet.dto.MainPage;
-
-import java.util.Objects;
 import java.util.Optional;
-
 import static io.javalin.rendering.template.TemplateUtil.model;
 
 public class RootController {

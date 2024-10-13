@@ -5,6 +5,7 @@ import io.javalin.validation.ValidationError;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.example.hexlet.dto.BasePage;
 
 import java.util.List;
 import java.util.Map;
@@ -12,7 +13,7 @@ import java.util.Map;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class BuildUserPage {
+public class BuildUserPage extends BasePage {
     private String name;
     private String email;
     private Map<String, List<ValidationError<Object>>> errors;

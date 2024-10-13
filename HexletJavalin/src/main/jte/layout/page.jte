@@ -1,5 +1,7 @@
 @import gg.jte.Content
 @import org.example.hexlet.util.NamedRoutes
+@import org.example.hexlet.dto.BasePage
+@param BasePage page = null
 @param Content content
 @param Content footer = null
 
@@ -30,8 +32,18 @@
                 </ul>
             </div>
         </nav>
-
         <div class="mx-auto p-4 py-md-2">
+            @if(page != null && page.getFlash() != null)
+                @if(page.getFlag())
+                    <div class="alert alert-success" role="alert">
+                        ${page.getFlash()}
+                    </div>
+                @else
+                    <div class="alert alert-danger" role="alert">
+                        ${page.getFlash()}
+                    </div>
+                @endif
+            @endif
             ${content}
         </div>
 

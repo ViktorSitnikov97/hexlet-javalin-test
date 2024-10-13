@@ -28,6 +28,8 @@ public class UsersController {
         }
 
         var page = new UsersPage(users, term);
+        page.setFlash(ctx.consumeSessionAttribute("flash"));
+        page.setFlag(true);
         ctx.render("users/index.jte", model("page", page));
     }
 
@@ -51,13 +53,17 @@ public class UsersController {
             var passwordConfirmation = ctx.formParam("passwordConfirmation");
             var password = ctx.formParamAsClass("password", String.class)
                     .check(value -> value.equals(passwordConfirmation), "Пароли не совпадают")
-                    .check(value -> value.length() >= 6, "Пароль менее 6 символов")
+                    .check(value -> value.length() >= 4, "Пароль менее 4 символов")
                     .get();
             var user = new User(name, email, password);
             UserRepository.save(user);
+            ctx.sessionAttribute("flash", "User has been added!");
             ctx.redirect(NamedRoutes.usersPath());
-        } catch(ValidationException e) {
+        } catch (ValidationException e) {
             var page = new BuildUserPage(name, email, e.getErrors());
+            ctx.sessionAttribute("flash", "User has not been added!");
+            page.setFlash(ctx.consumeSessionAttribute("flash"));
+            page.setFlag(false);
             ctx.render("users/build.jte", model("page", page));
         }
     }
@@ -82,19 +88,22 @@ public class UsersController {
             var passwordConfirmation = ctx.formParam("passwordConfirmation");
             var password = ctx.formParamAsClass("password", String.class)
                     .check(value -> value.equals(passwordConfirmation), "Пароли не совпадают")
-                    .check(value -> value.length() >= 6, "Пароль менее 6 символов")
+                    .check(value -> value.length() >= 4, "Пароль менее 4 символов")
                     .get();
 
             var user = UserRepository.find(id).get();
             user.setName(name);
             user.setEmail(email);
             user.setPassword(password);
-
+            ctx.sessionAttribute("flash", "User has been updated!");
             ctx.redirect(NamedRoutes.usersPath());
 
-        } catch(ValidationException e) {
+        } catch (ValidationException e) {
 //            var password = ctx.formParam("password");
             var page = new EditUserPage(id, name, email, null, e.getErrors());
+            ctx.sessionAttribute("flash","User has not been updated!");
+            page.setFlash(ctx.consumeSessionAttribute("flash"));
+            page.setFlag(false);
             ctx.render("users/edit.jte", model("page", page));
         }
     }
@@ -102,6 +111,7 @@ public class UsersController {
     public static void destroy(Context ctx) {
         var id = ctx.pathParamAsClass("id", Long.class).get();
         UserRepository.delete(id);
+        ctx.sessionAttribute("flash", "User has been deleted!");
         ctx.redirect(NamedRoutes.usersPath());
     }
 

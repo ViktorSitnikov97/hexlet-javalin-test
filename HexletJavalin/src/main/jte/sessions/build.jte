@@ -12,7 +12,7 @@ content = @`
             @endfor
         </ul>
     @endif
-    <form action="${NamedRoutes.sessionsPath()}" method="post" class="text-center p-5">
+    <form action="${NamedRoutes.loginPath()}" method="post" class="text-center p-5">
         <div class="mb-3">
             <label class="form-label">
                 Nickname
