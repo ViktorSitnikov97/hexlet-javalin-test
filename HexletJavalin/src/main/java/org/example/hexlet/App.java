@@ -1,17 +1,45 @@
 package org.example.hexlet;
 
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinJte;
+import lombok.extern.slf4j.Slf4j;
 import org.example.hexlet.controllers.CoursesController;
 import org.example.hexlet.controllers.RootController;
 import org.example.hexlet.controllers.SessionController;
 import org.example.hexlet.controllers.UsersController;
+import org.example.hexlet.repository.BaseRepository;
+import org.example.hexlet.repository.UserRepository;
 import org.example.hexlet.util.NamedRoutes;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.sql.SQLException;
+import java.util.stream.Collectors;
 
-
+@Slf4j
 public class App {
-    public static void main(String[] args) {
+
+    public static Javalin getApp() throws IOException, SQLException {
+
+        var hikariConfig = new HikariConfig();
+        hikariConfig.setJdbcUrl("jdbc:h2:mem:hexlet;DB_CLOSE_DELAY=-1;");
+
+        var dataSource = new HikariDataSource(hikariConfig);
+        var url = App.class.getClassLoader().getResourceAsStream("schema.sql");
+        var sql = new BufferedReader(new InputStreamReader(url))
+                .lines().collect(Collectors.joining("\n"));
+
+        log.info(sql);
+        try (var connection = dataSource.getConnection();
+             var statement = connection.createStatement()) {
+            statement.execute(sql);
+        }
+        BaseRepository.dataSource = dataSource;
+        UserRepository.addFakeUsers();
+
         var app = Javalin.create(config -> {
             config.bundledPlugins.enableDevLogging();
             config.fileRenderer(new JavalinJte());
@@ -44,7 +72,7 @@ public class App {
         app.get(NamedRoutes.courseEditPath("{id}"), CoursesController::edit);
         app.post(NamedRoutes.coursePath("{id}"), CoursesController::update);
 
-        app.delete(NamedRoutes.coursePath("{id}"), CoursesController::destroy);
+        app.post(NamedRoutes.courseDeletePath("{id}"), CoursesController::destroy);
 
 
         app.get("/hello", ctx -> {
@@ -54,8 +82,14 @@ public class App {
             } else {
                 ctx.result("Hello, World!");
             }
-
         });
+
+        return app;
+
+    }
+
+    public static void main(String[] args) throws IOException, SQLException{
+        Javalin app = getApp();
         app.start(7060);
     }
 }
