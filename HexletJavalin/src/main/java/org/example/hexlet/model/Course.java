@@ -14,12 +14,12 @@ public class Course {
     private Long id;
 
     @ToString.Include
-    private String name;
+    private String title;
 
     private String description;
 
-    public Course(String name, String description) {
-        this.name = name;
+    public Course(String title, String description) {
+        this.title = title;
         this.description = description;
     }
 }

@@ -3,7 +3,7 @@ import org.example.hexlet.dto.users.BuildUserPage;
 import org.example.hexlet.util.NamedRoutes;
 public final class JtebuildGenerated {
 	public static final String JTE_NAME = "users/build.jte";
-	public static final int[] JTE_LINE_INFO = {0,0,1,2,2,2,3,6,6,7,7,9,9,10,10,11,11,11,12,12,13,13,15,15,16,16,16,16,16,16,16,16,16,20,20,20,20,20,20,20,20,20,26,26,26,26,26,26,26,26,26,43,43,43,43,43,2,2,2,2};
+	public static final int[] JTE_LINE_INFO = {0,0,1,2,2,2,3,6,6,7,7,9,9,10,10,11,11,11,12,12,13,13,15,15,16,16,16,16,16,16,16,16,16,20,20,20,20,20,20,20,20,20,43,43,43,43,43,2,2,2,2};
 	public static void render(gg.jte.html.HtmlTemplateOutput jteOutput, gg.jte.html.HtmlInterceptor jteHtmlInterceptor, BuildUserPage page) {
 		gg.jte.generated.ondemand.layout.JtepageGenerated.render(jteOutput, jteHtmlInterceptor, page, new gg.jte.html.HtmlContent() {
 			public void writeTo(gg.jte.html.HtmlTemplateOutput jteOutput) {
@@ -40,16 +40,7 @@ public final class JtebuildGenerated {
 					jteOutput.setContext("input", null);
 					jteOutput.writeContent("\"");
 				}
-				jteOutput.writeContent("/>\n                </label>\n            </div>\n            <div class=\"mb-3\">\n                <label class=\"form-label\">\n                    Email\n                    <input type=\"email\" class=\"form-control\" required name=\"email\"");
-				var __jte_html_attribute_2 = page.getEmail();
-				if (gg.jte.runtime.TemplateUtils.isAttributeRendered(__jte_html_attribute_2)) {
-					jteOutput.writeContent(" value=\"");
-					jteOutput.setContext("input", "value");
-					jteOutput.writeUserContent(__jte_html_attribute_2);
-					jteOutput.setContext("input", null);
-					jteOutput.writeContent("\"");
-				}
-				jteOutput.writeContent("/>\n                </label>\n            </div>\n            <div class=\"mb-3\">\n                <label class=\"form-label\">\n                    Password\n                    <input type=\"password\" class=\"form-control\" required name=\"password\" />\n                </label>\n            </div>\n            <div class=\"mb-3\">\n                <label class=\"form-label\">\n                    Password Confirmation\n                    <input type=\"password\" class=\"form-control\" required name=\"passwordConfirmation\" />\n                </label>\n            </div>\n            <input type=\"submit\" class=\"btn btn-primary\" value=\"Sign Up\" />\n        </form>\n    ");
+				jteOutput.writeContent("/>\n                </label>\n            </div>\n            <div class=\"mb-3\">\n                <label class=\"form-label\">\n                    Email\n                    <input type=\"email\" class=\"form-control\" required name=\"email\"/>\n                </label>\n            </div>\n            <div class=\"mb-3\">\n                <label class=\"form-label\">\n                    Password\n                    <input type=\"password\" class=\"form-control\" required name=\"password\" />\n                </label>\n            </div>\n            <div class=\"mb-3\">\n                <label class=\"form-label\">\n                    Password Confirmation\n                    <input type=\"password\" class=\"form-control\" required name=\"passwordConfirmation\" />\n                </label>\n            </div>\n            <input type=\"submit\" class=\"btn btn-primary\" value=\"Sign Up\" />\n        </form>\n    ");
 			}
 		}, null);
 	}
