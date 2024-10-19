@@ -2,6 +2,7 @@
 @import org.example.hexlet.util.NamedRoutes
 @param BuildCoursePage page
 @template.layout.page(
+    page = page,
     content = @`
         @if(page.getErrors() != null)
             <ul class="text-danger">
@@ -15,8 +16,8 @@
         <form action="${NamedRoutes.coursesPath()}" method="post" class="text-center p-5">
             <div class="mb-3">
                 <label class="form-label">
-                    Name
-                    <input type="text" class="form-control" required name="name" value="${page.getName()}"/>
+                    Title
+                    <input type="text" class="form-control" required name="title" value="${page.getName()}"/>
                 </label>
             </div>
             <div class="mb-3">

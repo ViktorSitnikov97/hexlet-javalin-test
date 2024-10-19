@@ -12,14 +12,17 @@ content = @`
         <input type="submit" class="btn btn-outline-primary" value="Search">
     </form>
 
-    <table class="table table-striped text-center p-5 text-dark">
+    <table class="table table-striped">
         @if(page.getUsers().isEmpty())
             <p class="text-center p-5">Ни один пользователь не найден</p>
         @endif
         @for(var user : page.getUsers())
             <tr>
                 <td>
-                    <p><a href = "${NamedRoutes.userPath(user.getId())}">${user.getName()}</a></p>
+                    ${user.getId()}
+                </td>
+                <td>
+                    <a href = "${NamedRoutes.userPath(user.getId())}">${user.getName()}</a>
                 </td>
             </tr>
         @endfor

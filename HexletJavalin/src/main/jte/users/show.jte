@@ -14,12 +14,14 @@
         <table>
             <tr>
                 <div class="mx-auto p-4 py-md-3">
-                <th><a class="btn btn-primary btn-sm offset-md-4" href="${NamedRoutes.userEditPath(page.getUser().getId())}" role="button">Update</a></th>
-                <th>
-                    <form action="${NamedRoutes.userDeletePath(page.getUser().getId())}"  method="post">
-                        <input type="submit" class="btn btn-danger btn-sm offset-md-4" value="Delete" />
-                    </form>
-                </th>
+                    <th>
+                        <a class="btn btn-primary btn-sm offset-md-4" href="${NamedRoutes.userEditPath(page.getUser().getId())}" role="button">Update</a>
+                    </th>
+                    <th>
+                        <form action="${NamedRoutes.userDeletePath(page.getUser().getId())}"  method="post">
+                            <input type="submit" class="btn btn-danger btn-sm offset-md-4" value="Delete" />
+                        </form>
+                    </th>
                 </div>
             </tr>
         </table>

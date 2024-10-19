@@ -23,7 +23,7 @@
             <div class="mb-3">
                 <label class="form-label">
                     Email
-                    <input type="email" class="form-control" required name="email" value="${page.getEmail()}"/>
+                    <input type="email" class="form-control" required name="email"/>
                 </label>
             </div>
             <div class="mb-3">

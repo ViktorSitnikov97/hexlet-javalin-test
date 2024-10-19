@@ -29,7 +29,7 @@ content = @`
         <div class="mb-3">
             <label class="form-label">
                 Password
-                <input type="password" class="form-control" required name="password" value="${page.getPassword()}"/>
+                <input type="password" class="form-control" required name="password"/>
             </label>
         </div>
         <div class="mb-3">
